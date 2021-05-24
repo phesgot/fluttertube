@@ -1,3 +1,4 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertube/delegates/data_search.dart';
 
@@ -27,8 +28,8 @@ class Home extends StatelessWidget {
               icon: Icon(Icons.search),
               onPressed: () async {
                 String result = await showSearch(context: context, delegate: DataSearch());
-                print(result);
-              }
+                if(result != null)BlocProvider
+              },
               )
         ],
       ),

@@ -15,7 +15,7 @@ class Api{
 
   }
 
-  List<Video> decode(http.Response response){
+  List<Video>decode(http.Response response){
 
       if(response.statusCode == 200){
         var decoded = json.decode(response.body);
