@@ -64,9 +64,8 @@ class DataSearch extends SearchDelegate<String> {
   }
 
   Future<List>suggestions(String search) async {
-    var url = Uri.parse(
-        "http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q=$search&format=5&alt=json");
-    var response = await http.get(url);
+
+    http.Response response = await http.get("http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q=$search&format=5&alt=json");
 
     if (response.statusCode == 200) {
       return json.decode(response.body)[1].map((v){

@@ -8,16 +8,17 @@ class Api{
 
   search(String search) async{
 
-    var url = Uri.parse("https://www.googleapis.com/youtube/v3/search?part=snippet&q=$search&type=video&key=$API_KEY&maxResults=10");
-    var response = await http.get(url);
+    http.Response response = await http.get("https://www.googleapis.com/youtube/v3/search?part=snippet&q=$search&type=video&key=$API_KEY&maxResults=10");
 
-    decode(response);
+    return decode(response);
 
   }
 
-  List<Video>decode(http.Response response){
+
+  List<Video> decode(http.Response response){
 
       if(response.statusCode == 200){
+
         var decoded = json.decode(response.body);
 
         List<Video> videos = decoded["items"].map<Video>(
@@ -25,6 +26,7 @@ class Api{
               return Video.fromJson(map);
             }
         ).toList();
+        print(videos);
       } else{
         throw Exception("Falha ao carregar videos");
       }
