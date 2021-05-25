@@ -26,7 +26,7 @@ class Api{
               return Video.fromJson(map);
             }
         ).toList();
-        print(videos);
+        return videos;
       } else{
         throw Exception("Falha ao carregar videos");
       }
