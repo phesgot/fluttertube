@@ -5,35 +5,31 @@ import 'package:fluttertube/api.dart';
 import 'package:fluttertube/models/videos.dart';
 
 class VideosBloc implements BlocBase {
-
   Api api;
   List<Video> videos;
 
-  final StreamController<List<Video>> _videosController = StreamController<List<Video>>();
+  final StreamController<List<Video>> _videosController =
+      StreamController<List<Video>>();
   Stream get outVideos => _videosController.stream;
 
   final StreamController<String> _searchController = StreamController<String>();
   Sink get inSearch => _searchController.sink;
 
-
-
-  VideosBloc(){
+  VideosBloc() {
     api = Api();
 
     _searchController.stream.listen(_search);
   }
 
   void _search(String search) async {
-    if( search != null){
+    if (search != null) {
       _videosController.sink.add([]);
       videos = await api.search(search);
-    }else{
+    } else {
       videos += await api.nextPage();
     }
     _videosController.sink.add(videos);
-
   }
-
 
   @override
   void dispose() {
@@ -59,6 +55,4 @@ class VideosBloc implements BlocBase {
   void removeListener(VoidCallback listener) {
     // TODO: implement removeListener
   }
-
-
 }
