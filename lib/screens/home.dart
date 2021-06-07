@@ -6,6 +6,8 @@ import 'package:fluttertube/delegates/data_search.dart';
 import 'package:fluttertube/models/videos.dart';
 import 'package:fluttertube/widgets/videotile.dart';
 
+import 'favorites.dart';
+
 final _videoBloc = BlocProvider.getBloc<VideosBloc>();
 final _favoriteBloc = BlocProvider.getBloc<FavoriteBloc>();
 
@@ -26,7 +28,6 @@ class Home extends StatelessWidget {
           Align(
               alignment: Alignment.center,
               child: StreamBuilder<Map<String, Video>>(
-                initialData: {},
                 stream: _favoriteBloc.outFav,
                 builder: (context, snapshot) {
                   if (snapshot.hasData)
@@ -35,7 +36,12 @@ class Home extends StatelessWidget {
                     return Container();
                 },
               )),
-          IconButton(icon: Icon(Icons.star), onPressed: () {}),
+          IconButton(
+              icon: Icon(Icons.star),
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Favorites()));
+              }),
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () async {
@@ -51,7 +57,6 @@ class Home extends StatelessWidget {
       backgroundColor: Colors.black,
       body: StreamBuilder(
           stream: _videoBloc.outVideos,
-          initialData: [],
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
